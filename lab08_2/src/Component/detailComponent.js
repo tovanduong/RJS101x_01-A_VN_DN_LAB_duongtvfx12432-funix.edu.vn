@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { Component } from "react";
-import dateFormat from "dateformat";
+// import dateFormat from "dateformat";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import {
   Card,
@@ -39,7 +39,7 @@ function RenderDish({ dish }) {
 }
 
 function RenderComments({ comments, addComment, dishId }) {
-  console.log({ comments });
+console.log(addComment)
   if (comments != null)
     return (
       <div className="col-12 col-md-5 m-1">
@@ -53,7 +53,7 @@ function RenderComments({ comments, addComment, dishId }) {
                   <p>{comment.rating} stars</p>
                   <p>
                     -- {comment.author} ,
-                    {dateFormat(comment.date, "dd/mm/yyyy")}
+                    {comment.date}
                   </p>
                 </li>
               </div>
@@ -86,14 +86,7 @@ class CommentForm extends Component {
 
   handleSubmit(values) {
     this.toggleModal();
-    this.props.addComment(
-      this.props.dishId,
-      values.rating,
-      values.author,
-      values.comment
-    );
-    console.log(values);
-    alert("Your Comment:" + JSON.stringify(values));
+    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
   }
 
   render() {
@@ -125,10 +118,10 @@ class CommentForm extends Component {
               </Row>
               <Row className="form-group">
                 <Col>
-                  <Label htmlFor="name">Your name</Label>
+                  <Label htmlFor="author">Your name</Label>
                   <Control.textarea
-                    model=".name"
-                    id="name"
+                    model=".author"
+                    id="author"
                     rows="1"
                     className="form-control"
                     validators={{
@@ -139,7 +132,7 @@ class CommentForm extends Component {
                   />
                   <Errors
                     className="text-danger"
-                    model=".name"
+                    model=".author"
                     show="touched"
                     messages={{
                       required: "Yêu cầu nhập",
@@ -171,7 +164,6 @@ class CommentForm extends Component {
   }
 }
 const DishDetail = (props) => {
-  console.log(props);
   if (props.dish != null)
     return (
       <div className="container">
